@@ -1,0 +1,15 @@
+
+<ion-header-bar class="bar-positive">
+	<h1 class="title">Free Champion Rotation</h1>
+</ion-header-bar>
+<ion-view title="Free Champion Rotation">
+    <ion-content class="scroll has-header">
+		<div class="list">
+			<a ng-repeat="champ in freeChamps" href="#/champ/{{ champ.id }}" class="item item-avatar" href="#">
+			  <img src="http://ddragon.leagueoflegends.com/cdn/4.21.5/img/champion/{{ champ.key }}.png">
+			  <h2>{{ champ.name }}</h2>
+			  <p>{{ champ.title }}</p>
+			</a>
+		</div>
+    </ion-content>
+</ion-view>

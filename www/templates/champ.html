@@ -1,0 +1,123 @@
+<ion-header-bar class="bar-positive">
+	<a ng-click="goBack()" class="button icon-left ion-chevron-left button-clear">Back</a>
+	<h1 class="title">{{ champ.name }}</h1>
+</ion-header-bar>
+<ion-view title="Champion Details">
+
+    <ion-content class="scroll has-header">
+		<div class="list card">
+			<div class="item item-avatar">
+				<img src="http://ddragon.leagueoflegends.com/cdn/4.21.5/img/champion/{{ champ.key }}.png">
+				<h2><b>{{ champ.name }}</b> {{ champ.title }}</h2>
+				<p><span ng-repeat="tag in champ.tags">{{tag}}{{$last ? '' : ', '}}</span></p>
+			</div>
+		
+			<div class="item range item range range-assertive">
+			  <img src="img/Attackpower.png">
+			  <input type="range" name="volume" min="0" max="100" value="{{ champ.info.attack * 10 }}" disabled>
+			  <img src="img/Attackpower.png">
+			</div>
+			<div class="item range item range range-balanced">
+			  <img src="img/Defensepower.png">
+			  <input type="range" name="volume" min="0" max="100" value="{{ champ.info.defense * 10 }}" disabled>
+			  <img src="img/Defensepower.png">
+			</div>
+			<div class="item range item range range-positive">
+			  <img src="img/Abilitypower.png">
+			  <input type="range" name="volume" min="0" max="100" value="{{ champ.info.magic * 10 }}" disabled>
+			  <img src="img/Abilitypower.png">
+			</div>
+			<div class="item range item range range-royal">
+			  <img src="img/Difficulty.png">
+			  <input type="range" name="volume" min="0" max="100" value="{{ champ.info.difficulty * 10 }}" disabled>
+			  <img src="img/Difficulty.png">
+			</div>
+			<div class="list" style="border-radius: 0px; margin-bottom: 0px;">
+
+				<a ng-click="openModal(spell, $index)" class="item item-avatar" ng-repeat="spell in champ.spells" style="border-radius: 0px;">
+				  <div class="img " style="height:41px; width:41px; background: url('img/sprites/{{ spell.image.sprite}}') -{{ spell.image.x }}px -{{ spell.image.y }}px no-repeat; border-radius: 5px; margin-bottom: 5px; position: fixed; margin-left: -55px; padding-top: 12px;"><center><span style="color: white; font-size: 30px;">{{ getKey($index) }}</span></center></div>
+				  <h2>{{ spell.name }} </h2>
+				  <p>{{ spell.description }}</p>
+				</a>
+
+			</div>
+			<div class="item item-body">
+				<h2>Playing As {{ champ.name }}</h2>
+				<p ng-repeat="tip in champ.allytips">
+					{{ tip }}
+				</p>
+				
+				<h2>Playing Against {{ champ.name }}</h2>
+				<p ng-repeat="tip in champ.enemytips">
+					{{ tip }}
+				</p>	
+				<button ng-click="openModal2({{ champ }})" class="button button-full button-positive">
+					Skins
+				</button>
+				
+			</div>
+		</div>
+    </ion-content>
+</ion-view>
+<script id="skins-modal.html" type="text/ng-template">
+  <ion-modal-view>
+    <ion-header-bar class="bar-positive">
+	  <a ng-click="closeModal2()" class="button icon-left ion-chevron-left button-clear">Back</a>
+      <h1 class="title">{{ champ.name }} Skins</h1>
+    </ion-header-bar>
+    <ion-content class="has-header">
+					<ion-slide-box on-slide-changed="slideHasChanged($index)">
+						<ion-slide ng-repeat="skin in champ.skins">
+							<center>
+								<p><center><b>{{ skin.name }}</b></center></p>
+								<img class="full-image" style="height: auto; width: 70%; border-radius: 5px;" src="http://ddragon.leagueoflegends.com/cdn/img/champion/loading/{{ champ.key }}_{{ skin.num }}.jpg">
+							</center>
+						</ion-slide>
+					</ion-slide-box>
+    </ion-content>
+  </ion-modal-view>
+</script>
+<script id="video-modal.html" type="text/ng-template">
+  <ion-modal-view>
+    <ion-header-bar class="bar-positive">
+	  <a ng-click="closeModal()" class="button icon-left ion-chevron-left button-clear">Back</a>
+      <h1 class="title">{{ spell.name }}</h1>
+    </ion-header-bar>
+    <ion-content>
+		<div class="list card">
+			<iframe src="link"></frame>
+		</div>
+    </ion-content>
+  </ion-modal-view>
+</script>
+<script id="abilities-modal.html" type="text/ng-template">
+  <ion-modal-view>
+    <ion-header-bar class="bar-positive">
+	  <a ng-click="closeModal()" class="button icon-left ion-chevron-left button-clear">Back</a>
+      <h1 class="title">{{ spell.name }}</h1>
+    </ion-header-bar>
+    <ion-content>
+		<div class="list card">
+
+		  <div class="item item-avatar">
+			<div class="img " style="height:41px; width:41px; background: url('img/sprites/{{ spell.image.sprite}}') -{{ spell.image.x }}px -{{ spell.image.y }}px no-repeat; border-radius: 5px; margin-bottom: 5px; position: fixed; margin-left: -55px; padding-top: 12px;"><center><span style="color: white; font-size: 30px;">{{ getKey($index) }}</span></center></div>
+			<h2>{{ spell.name }}</h2>
+			<p>Range: {{ spell.rangeBurn }}</p>
+		  </div>
+
+		  <div class="item item-body">
+			<p>
+				<b>{{ spell.costBurn }} {{ spell.costType }}</b> 
+			</p>
+			<p>
+				{{ spell.description }}
+			</p>	
+			<div class="box-main" style="width: 100%; position: relative;">
+					<!--{{ fullLink = "http://cdn.leagueoflegends.com/champion-abilities/videos/mp4/" + (champ.id | numberFixedLen:4) + "_" + (index | numberFixedLen: 2) + ".mp4" }}-->
+					<img style="width: 100%; border-radius: 5px;" src="http://cdn.leagueoflegends.com/champion-abilities/images/{{ champ.id | numberFixedLen:4 }}_{{ index | numberFixedLen: 2 }}.jpg">
+			</div>
+		  </div>
+		</div>
+    </ion-content>
+  </ion-modal-view>
+</script>
