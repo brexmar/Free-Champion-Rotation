@@ -1,4 +1,4 @@
-# Free-Champion-Rotation
+# Free-Champion-Rotations
 Guide for new players to League of Legends Weekly Free-to-play Champions.
 
 Built with [Ionic Framework](http://ionicframework.com/)
